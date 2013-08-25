@@ -8,25 +8,28 @@ Some ports may have been merged in the main MacPorts distribution after having b
 
 * (2013/08/25) graphics/libfreenect v0.2.0 from [OpenKinect/libfreenect](https://github.com/OpenKinect/libfreenect): just needed an update
 * (2013/08/25) graphics/openni2 v2.2.0.30 from [ChristianFrisson/OpenNI2](https://github.com/ChristianFrisson/OpenNI2): required fixes for clang to compile under OSX 10.8 and scripts for a clean installation
-* (2013/08/25) graphics/openni2-freenectdriver v2.0.0.29 from [piedar/OpenNI2-FreenectDriver](https://github.com/piedar/OpenNI2-FreenectDriver): requires waf fixes to compiple
+* (2013/08/25) graphics/openni2-freenectdriver v2.0.0.29 from [piedar/OpenNI2-FreenectDriver](https://github.com/piedar/OpenNI2-FreenectDriver): required waf fixes to compile
 * (2013/08/25) graphics/tiff v4.0.3 from [tiff](http://www.remotesensing.org/libtiff/): required cleaned headerpad_max_install_names ldflags otherwise fixing up app bundles fails against this dependency
 
 ## Installation
 
 Once MacPorts is installed, open a terminal in a directory where you want to download MacPortsCycles:
-* install git if you don't have it:
+
+### Install git if you don't have it
+```bash
+sudo port selfupdate; 
+sudo port install git-core; 
 ```
-sudo port selfupdate
-sudo port install git-core
-```
-* clone this repository and at its path to the MacPorts sources before other entries:
-```
-git clone https://github.com/ChristianFrisson/MacPortsCycles.git
-sudo sh -c 'port=`which port`;echo "file://`pwd`/MacPortsCycles\n$(cat ${port%bin/port}etc/macports/sources.conf)" > ${port%bin/port}etc/macports/sources.conf'
+
+### Clone this repository and add its path to the MacPorts sources before other entries
+```bash
+git clone https://github.com/ChristianFrisson/MacPortsCycles.git; 
+sudo sh -c 'port=`which port`;echo "file://`pwd`/MacPortsCycles\n$(cat ${port%bin/port}etc/macports/sources.conf)" > ${port%bin/port}etc/macports/sources.conf'; 
 sudo port selfupdate
 ```
 
+### Install ports
 Then to install a given port listed above, for instance tiff:
-```
+```bash
 sudo port install tiff
 ```
