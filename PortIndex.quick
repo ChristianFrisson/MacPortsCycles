@@ -1,4 +1,6 @@
 libfreenect 0
-openni2 645
-openni2-freenectdriver 1237
-tiff 1980
+openni 645
+openni-avin2sensorkinect 1213
+openni2 1705
+openni2-freenectdriver 2297
+tiff 3040
