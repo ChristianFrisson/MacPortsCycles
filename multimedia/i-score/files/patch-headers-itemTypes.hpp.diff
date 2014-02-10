@@ -1,0 +1,12 @@
+--- /dev/null	2014-02-10 09:42:08.000000000 +0100
++++ headers/itemTypes.hpp	2014-02-09 16:30:58.000000000 +0100
+@@ -0,0 +1,9 @@
++#ifndef ITEMTYPES_HPP
++#define ITEMTYPES_HPP
++
++#include <QGraphicsItem>
++
++const int ProcessItemType = QGraphicsItem::UserType + 1;
++const int EventItemType = QGraphicsItem::UserType + 2;
++
++#endif // ITEMTYPES_HPP

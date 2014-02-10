@@ -1,0 +1,33 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 96206 2012-08-04 00:27:43Z ryandesign@macports.org $
+
+PortSystem          1.0
+PortGroup           github 1.0
+PortGroup           cmake 1.0
+
+github.setup        OSSIA Score 746aa5dcb0
+name		    JamomaScore
+version             0.10.a3
+categories          multimedia
+platforms           darwin
+maintainers         gmail.com:christian.frisson openmaintainer
+license             CeCILL-C
+
+description         Jamoma Frameworks for OSSIA Score
+
+long_description    The Score framework is based on the Jamoma Foundation which allows \
+                    to setup a Peer Object Model mechanism in order to embedded easily \
+                    the features inside many programmation environments (such as Max) \
+                    or inside specific application dealing with logical and temporal constraints.\
+                    It also provides a tree structure to manage the namespace of an application \
+                    in order to organize and access its services.
+
+checksums           rmd160  568f61029199cf0d3828c965563ea4bb6c67cf3f \
+                    sha256  9440ef596a247353214150dfb3e383eeca54f6dcba17c7d077a102b4e1e1a62e
+
+depends_lib         port:JamomaCore \
+                    port:gecode
+
+patchfiles          patch-CMakeLists.txt.diff
+
+

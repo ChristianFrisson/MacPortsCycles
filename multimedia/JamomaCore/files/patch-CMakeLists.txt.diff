@@ -1,0 +1,68 @@
+--- /dev/null	2014-02-09 15:06:06.000000000 +0100
++++ CMakeLists.txt	2014-02-09 15:05:55.000000000 +0100
+@@ -0,0 +1,65 @@
++# CMake integration by Christian Frisson (UMONS)
++
++# Project settings
++PROJECT(JAMOMA)
++cmake_minimum_required(VERSION 2.6.2)
++
++OPTION(USE_DEBUG "Use Debug" ON)
++OPTION(BUILD_SHARED_LIBS "Build libraries as shared" ON)
++
++IF ( USE_DEBUG )
++	MESSAGE( "\nConfigured for Debug Build")
++	SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DUSE_DEBUG -DTI_DEBUG=1 -g")
++	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSE_DEBUG -DTI_DEBUG=1 -g")
++	SET(CMAKE_BUILD_TYPE "Debug")
++	SET(CMAKE_VERBOSE_MAKEFILE ON)
++ELSE ( USE_DEBUG )
++	MESSAGE( "\nConfigured for Release Build")
++	SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTI_DEBUG=0 -O3")
++	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DTI_DEBUG=0 -O3")
++	SET(CMAKE_BUILD_TYPE "Release")
++	SET(CMAKE_VERBOSE_MAKEFILE OFF)
++	IF(APPLE)
++		SET(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/release")
++	ENDIF()
++ENDIF ( USE_DEBUG )
++
++# clang under OSX 10.9
++SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11") #-stdlib=libc++
++
++#Boost
++FIND_PACKAGE ( Boost REQUIRED COMPONENTS system filesystem regex)
++INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
++
++#LibXml2
++FIND_PACKAGE ( LibXml2 REQUIRED )
++INCLUDE_DIRECTORIES( ${LIBXML2_INCLUDE_DIR} )
++
++# Foundation
++INCLUDE_DIRECTORIES("Foundation/library/includes/" "Foundation/library/Mersenne-1.1" "Foundation/library/tests/")
++FILE(GLOB FOUNDATION_SRCS Foundation/library/source/*.cpp Foundation/library/tests/*.cpp)
++FILE(GLOB FOUNDATION_HDRS Foundation/library/includes/*.h)
++ADD_LIBRARY(JamomaFoundation ${FOUNDATION_SRCS} ${FOUNDATION_HDRS})
++TARGET_LINK_LIBRARIES(JamomaFoundation ${Boost_LIBRARIES})
++INSTALL(TARGETS JamomaFoundation LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib COMPONENT JamomaFoundation)
++INSTALL(FILES ${FOUNDATION_HDRS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/jamoma COMPONENT JamomaFoundation)
++
++# DSP
++INCLUDE_DIRECTORIES("DSP/library/includes/")
++FILE(GLOB DSP_SRCS DSP/library/source/*.cpp DSP/library/tests/*.cpp)
++FILE(GLOB DSP_HDRS DSP/library/includes/*.h)
++ADD_LIBRARY(JamomaDSP ${DSP_SRCS} ${DSP_HDRS})
++TARGET_LINK_LIBRARIES(JamomaDSP JamomaFoundation)
++INSTALL(TARGETS JamomaDSP LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib COMPONENT JamomaDSP)
++INSTALL(FILES ${DSP_HDRS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/jamoma COMPONENT JamomaDSP)
++
++# Modular
++INCLUDE_DIRECTORIES("Modular/library/includes/" "Modular/library/PeerObject" "Modular/library/ProtocolLib" "Modular/library/SchedulerLib")
++FILE(GLOB MODULAR_SRCS Modular/library/source/*.cpp Modular/library/PeerObject/*.cpp Modular/library/ProtocolLib/*.cpp Modular/library/SchedulerLib/*.cpp)
++FILE(GLOB MODULAR_HDRS Modular/library/includes/*.h Modular/library/PeerObject/*.h Modular/library/ProtocolLib/*.h Modular/library/SchedulerLib/*.h)
++LIST(REMOVE_ITEM MODULAR_SRCS "${CMAKE_SOURCE_DIR}/Modular/library/PeerObject/TTOpmlHandler.cpp")
++LIST(REMOVE_ITEM MODULAR_HDRS "${CMAKE_SOURCE_DIR}/Modular/library/PeerObject/TTOpmlHandler.h")
++ADD_LIBRARY(JamomaModular ${MODULAR_SRCS} ${MODULAR_HDRS})
++TARGET_LINK_LIBRARIES(JamomaModular JamomaDSP JamomaFoundation ${LIBXML2_LIBRARIES})
++INSTALL(TARGETS JamomaModular LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib COMPONENT JamomaModular)
++INSTALL(FILES ${MODULAR_HDRS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/jamoma COMPONENT JamomaModular)

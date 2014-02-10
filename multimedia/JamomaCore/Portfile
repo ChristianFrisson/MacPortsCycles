@@ -1,0 +1,30 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 96206 2012-08-04 00:27:43Z ryandesign@macports.org $
+
+PortSystem          1.0
+PortGroup           github 1.0
+PortGroup           cmake 1.0
+
+github.setup        jamoma JamomaCore f54f8a7acc
+version             0.6.0.a28
+categories          multimedia
+platforms           darwin
+maintainers         gmail.com:christian.frisson openmaintainer
+license             New BSD License
+
+description         Jamoma Frameworks for Audio and Control Structure
+
+long_description    Jamoma Core provides a set of layered C++ frameworks and extensions \
+                    for creating an object model and then specializes that object model \
+                    for advanced purposes such as audio and graphics digital means.
+
+checksums           rmd160  ea2cd391501ef1f8f0cd1bf4a9322a81230f1225 \
+                    sha256  922eac8e5d745ec01308943214590c65da6c843747935c6832035eada2df3b0e
+
+depends_lib         port:boost \
+                    port:libxml2
+
+patchfiles          patch-CMakeLists.txt.diff \
+                    patch-Foundation-library-source-TTSymbolTable.cpp.diff
+
+

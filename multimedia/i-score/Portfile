@@ -1,0 +1,35 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 96206 2012-08-04 00:27:43Z ryandesign@macports.org $
+
+PortSystem          1.0
+PortGroup           github 1.0
+PortGroup           cmake 1.0
+
+github.setup        OSSIA i-score 0bf297646d
+name		    i-score
+version             0.1
+categories          multimedia
+platforms           darwin
+maintainers         gmail.com:christian.frisson openmaintainer
+license             CeCILL
+
+description         i-score is an interactive intermedia sequencer
+
+long_description    i-score is independent of the devices it controls: \
+                    these can be of such different natures as a set of light controls, \
+                    a video streaming software, or a sample repository, \
+                    these devices can also all be present simultaneously in a script. \
+                    All messages in i-score are abstract (devoid of language or coding \
+                    constraints), and can be sent on a network of devices, \
+                    through several communication protocols.
+
+checksums           rmd160  2239a9fc4c28a15b189c17ddc152cdaf2c29de2c \
+                    sha256  989229d148ce6825c4c65fe33a161d7bc5713638adc5f0d1ed50c3a1036ec7c0
+
+depends_lib         port:JamomaCore \
+                    port:JamomaScore
+
+patchfiles          patch-CMakeLists.txt.diff \
+                    patch-headers-itemTypes.hpp.diff \
+                    patch-headers-graphicstimebox.hpp.diff
+
