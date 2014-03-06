@@ -1,0 +1,53 @@
+--- cmake/FindLIBVLC.cmake	2013-12-06 11:23:05.000000000 +0100
++++ cmake/FindLIBVLC.cmake	2011-01-30 22:58:40.000000000 +0100
+@@ -1,10 +1,7 @@
++
+ # CMake module to search for LIBVLC (VLC library)
+-#
+-# Copyright (C) 2011-2012, Harald Sitter <sitter@kde.org>
+-# Copyright (C) 2010, Rohit Yadav <rohityadav89@gmail.com>
+-#
+-# Redistribution and use is allowed according to the terms of the BSD license.
+-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
++# Authors: Rohit Yadav <rohityadav89@gmail.com>
++#          Harald Sitter <apachelogger@ubuntu.com>
+ #
+ # If it's found it sets LIBVLC_FOUND to TRUE
+ # and following variables are set:
+@@ -32,7 +29,7 @@
+ #Put here path to custom location
+ #example: /home/user/vlc/include etc..
+ find_path(LIBVLC_INCLUDE_DIR vlc/vlc.h
+-HINTS "$ENV{LIBVLC_INCLUDE_PATH}" ${PC_LIBVLC_INCLUDEDIR} ${PC_LIBVLC_INCLUDE_DIRS}
++HINTS "$ENV{LIBVLC_INCLUDE_PATH}"
+ PATHS
+     "$ENV{LIB_DIR}/include"
+     "$ENV{LIB_DIR}/include/vlc"
+@@ -67,21 +64,7 @@
+ 
+ set(LIBVLC_VERSION ${PC_LIBVLC_VERSION})
+ if (NOT LIBVLC_VERSION)
+-    file(READ "${LIBVLC_INCLUDE_DIR}/vlc/libvlc_version.h" _libvlc_version_h)
+-
+-    string(REGEX MATCH "# define LIBVLC_VERSION_MAJOR +\\(([0-9])\\)" _dummy "${_libvlc_version_h}")
+-    set(_version_major "${CMAKE_MATCH_1}")
+-
+-    string(REGEX MATCH "# define LIBVLC_VERSION_MINOR +\\(([0-9])\\)" _dummy "${_libvlc_version_h}")
+-    set(_version_minor "${CMAKE_MATCH_1}")
+-
+-    string(REGEX MATCH "# define LIBVLC_VERSION_REVISION +\\(([0-9])\\)" _dummy "${_libvlc_version_h}")
+-    set(_version_revision "${CMAKE_MATCH_1}")
+-
+-    # Optionally, one could also parse LIBVLC_VERSION_EXTRA, but it does not
+-    # seem to be used by libvlc.pc.
+-
+-    set(LIBVLC_VERSION "${_version_major}.${_version_minor}.${_version_revision}")
++# TODO: implement means to detect version on windows (vlc --version && regex? ... ultimately we would get it from a header though...)
+ endif (NOT LIBVLC_VERSION)
+ 
+ if (LIBVLC_INCLUDE_DIR AND LIBVLC_LIBRARY AND LIBVLCCORE_LIBRARY)
+@@ -106,3 +89,4 @@
+         message(FATAL_ERROR "Could not find LibVLC")
+     endif (LIBVLC_FIND_REQUIRED)
+ endif (LIBVLC_FOUND)
++

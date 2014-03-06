@@ -1,0 +1,42 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 105452 2013-04-20 19:52:26Z michaelld@macports.org $
+
+PortSystem          1.0
+PortGroup           qt4 1.0
+PortGroup           cmake 1.0
+
+name                phonon-backend-vlc
+version             0.7.1
+categories          multimedia kde kde4
+license             {LGPL-2.1 LGPL-3}
+maintainers         michaelld openmaintainer
+description         Cross Platform Multimedia API used by KDE4
+long_description    Cross Platform Multimedia API used by KDE4
+platforms           darwin
+homepage            http://phonon.kde.org
+master_sites        kde:stable/phonon/${name}/${version}
+use_xz              yes
+distname            ${name}-${version}
+checksums           md5     3c41a3d141d40cedd2819676cdca5ea4 \
+                    sha1    6f8e8abae12fdafc63b911b185cb335c65d59450 \
+                    rmd160  fab516c10ce0f68330e76fc1ae6d75c2bcc1254b
+
+depends_build-append  port:automoc
+depends_lib-append  port:VLC
+depends_lib-append  port:phonon
+
+patchfiles          patch-cmake-FindLIBVLC.cmake.txt \                    patch-cmake-FindPhonon.cmake.txt \                    patch-CMakeLists.txt \                    patch-src-CMakeLists.txt \                    patch-src-utils-libvlc.cpp.txt
+
+pre-configure {
+    reinplace "s|qt5|qt4|g" ${worksrcpath}/CMakeLists.txt
+}
+
+configure.args-append   \
+    ${qt_cmake_defines} \
+    -DPHONON_INSTALL_QT_EXTENSIONS_INTO_SYSTEM_QT=true
+
+configure.ldflags-append -F${qt_frameworks_dir}
+
+livecheck.type		regex
+livecheck.url		http://www.gtlib.gatech.edu/pub/kde/stable/${name}/
+livecheck.regex		"\(\\d+(?:\\.\\d+)*)\/"

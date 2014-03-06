@@ -1,0 +1,23 @@
+--- CMakeLists.txt	2013-12-06 11:23:05.000000000 +0100
++++ CMakeLists.txt	2014-03-06 18:46:32.000000000 +0100
+@@ -5,12 +5,12 @@
+ 
+ # Phonon
+ find_package(Phonon REQUIRED)
+-macro_ensure_version("4.7.0" ${PHONON_VERSION} PHONON_FOUND)
++#macro_ensure_version("4.7.0" ${PHONON_VERSION} PHONON_FOUND)
+ macro_log_feature(PHONON_FOUND "Phonon" "Core Library" "git://anongit.kde.org/phonon.git" TRUE "4.7.0")
+ 
+ # LibVLC
+ find_package(LIBVLC REQUIRED)
+-macro_ensure_version("2.0.1" ${LIBVLC_VERSION} LIBVLC_FOUND)
++#macro_ensure_version("2.0.1" ${LIBVLC_VERSION} LIBVLC_FOUND)
+ macro_log_feature(LIBVLC_FOUND "LibVLC" "VLC C API Library" "git://git.videolan.org/vlc.git" TRUE "2.0.1")
+ 
+ if(PHONON_FOUND_EXPERIMENTAL)
+@@ -34,4 +34,4 @@
+ 
+ add_subdirectory(src)
+ 
+-macro_display_feature_log()
++#macro_display_feature_log()
