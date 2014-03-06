@@ -26,7 +26,7 @@ checksums           rmd160  568f61029199cf0d3828c965563ea4bb6c67cf3f \
                     sha256  9440ef596a247353214150dfb3e383eeca54f6dcba17c7d077a102b4e1e1a62e
 
 depends_lib         port:JamomaCore \
-                    port:gecode
+                    port:gecode3
 
 patchfiles          patch-CMakeLists.txt.diff
 
