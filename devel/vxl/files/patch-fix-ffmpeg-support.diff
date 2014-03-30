@@ -1,0 +1,109 @@
+diff --git a/core/vidl/vidl_ffmpeg_istream_v3.txx b/core/vidl/vidl_ffmpeg_istream_v3.txx
+index 73ab11f..a79867a 100644
+--- core/vidl/vidl_ffmpeg_istream_v3.txx
++++ core/vidl/vidl_ffmpeg_istream_v3.txx
+@@ -165,7 +165,7 @@ open(const vcl_string& filename)
+ 
+   // Open the stream
+   AVCodec* codec = avcodec_find_decoder(enc->codec_id);
+-  if ( !codec || avcodec_open( enc, codec ) < 0 ) {
++  if ( !codec || avcodec_open2( enc, codec, 0 ) < 0 ) {
+     return false;
+   }
+ 
+diff --git a/core/vidl/vidl_ffmpeg_ostream_v4.txx b/core/vidl/vidl_ffmpeg_ostream_v4.txx
+index 2eca21d..f56c81a 100644
+--- core/vidl/vidl_ffmpeg_ostream_v4.txx
++++ core/vidl/vidl_ffmpeg_ostream_v4.txx
+@@ -229,7 +229,7 @@ open()
+   if (params_.video_qscale_ || params_.same_quality_)
+   {
+     video_enc->flags |= CODEC_FLAG_QSCALE;
+-    st->quality = FF_QP2LAMBDA * params_.video_qscale_;
++    //st->quality = FF_QP2LAMBDA * params_.video_qscale_;
+   }
+   // if (bitexact)
+   //   video_enc->flags |= CODEC_FLAG_BITEXACT;
+@@ -246,9 +246,10 @@ open()
+   video_enc->spatial_cplx_masking = params_.scplx_mask_;
+   video_enc->temporal_cplx_masking = params_.tcplx_mask_;
+   video_enc->p_masking = params_.p_mask_;
+-  video_enc->quantizer_noise_shaping= params_.qns_;
++  //video_enc->quantizer_noise_shaping= params_.qns_;
+ 
+-  if (params_.use_umv_)
++  // Commented below are deprecated flags https://www.ffmpeg.org/doxygen/0.10/group__deprecated__flags.html
++  /*if (params_.use_umv_)
+   {
+     video_enc->flags |= CODEC_FLAG_H263P_UMV;
+   }
+@@ -259,21 +260,21 @@ open()
+   if (params_.use_aiv_)
+   {
+     video_enc->flags |= CODEC_FLAG_H263P_AIV;
+-  }
++  }*/
+   if (params_.use_4mv_)
+   {
+     video_enc->flags |= CODEC_FLAG_4MV;
+   }
+-  if (params_.use_obmc_)
++  /*if (params_.use_obmc_)
+   {
+     video_enc->flags |= CODEC_FLAG_OBMC;
+-  }
++  }*/
+   if (params_.use_loop_)
+   {
+     video_enc->flags |= CODEC_FLAG_LOOP_FILTER;
+   }
+ 
+-  if (params_.use_part_)
++  /*if (params_.use_part_)
+   {
+     video_enc->flags |= CODEC_FLAG_PART;
+   }
+@@ -284,7 +285,7 @@ open()
+   if (params_.use_scan_offset_)
+   {
+     video_enc->flags |= CODEC_FLAG_SVCD_SCAN_OFFSET;
+-  }
++  }*/
+   if (params_.closed_gop_)
+   {
+     video_enc->flags |= CODEC_FLAG_CLOSED_GOP;
+@@ -293,14 +294,14 @@ open()
+   {
+     video_enc->flags |= CODEC_FLAG_QPEL;
+   }
+-  if (params_.use_qprd_)
++  /*if (params_.use_qprd_)
+   {
+     video_enc->flags |= CODEC_FLAG_QP_RD;
+   }
+   if (params_.use_cbprd_)
+   {
+     video_enc->flags |= CODEC_FLAG_CBP_RD;
+-  }
++  }*/
+   if (params_.b_frames_)
+   {
+     video_enc->max_b_frames = params_.b_frames_;
+@@ -377,7 +378,7 @@ open()
+ 
+   vcl_strncpy( os_->fmt_cxt_->filename, filename_.c_str(), 1023 );
+ 
+-  if ( avio_open( &os_->fmt_cxt_->pb, filename_.c_str(), URL_WRONLY) < 0 )
++  if ( avio_open( &os_->fmt_cxt_->pb, filename_.c_str(), AVIO_FLAG_WRITE) < 0 )
+   {
+     vcl_cerr << "ffmpeg: couldn't open " << filename_ << " for writing\n";
+     close();
+@@ -387,7 +388,7 @@ open()
+ 
+   //dump_format( os_->fmt_cxt_, 1, filename_, 1 );
+ 
+-  if ( avcodec_open( video_enc, codec ) < 0 )
++  if ( avcodec_open2( video_enc, codec, 0 ) < 0 )
+   {
+     vcl_cerr << "ffmpeg: couldn't open codec\n";
+     close();
