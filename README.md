@@ -6,6 +6,7 @@ Portfiles for [MacPorts](https://www.macports.org) (software manager for Mac OSX
 
 Some ports may have been merged in the main MacPorts distribution after having been committed here.
 
+* (2014/03/31) aqua/qt5 v5.2.1: installs from the official dmg rather than compiling, experimental, breaks lots of dependent packages!
 * (2014/03/30) devel/vxl v1.17.0+ from [vxl/vxl](https://github.com/vxl/vxl): required openjpeg and ffmpeg fixes
 * (2013/08/25) graphics/libfreenect v0.2.0 from [OpenKinect/libfreenect](https://github.com/OpenKinect/libfreenect): just needed an update
 * (2013/08/30) graphics/openni v1.5.4.0 from [OpenNI/OpenNI](https://github.com/OpenNI/OpenNI): updated to the most recent unstable version

@@ -1,3 +1,5 @@
+qt5 519
+depends_build port:p7zip portdir aqua/qt5 description {Qt Tool Kit} homepage http://qt-project.org epoch 0 platforms macosx depends_lib {port:zlib path:bin/dbus-daemon:dbus port:openssl port:tiff port:libpng port:libmng port:jpeg port:mysql55} name qt5 long_description {Qt Tool Kit: A cross-platform framework (headers, data, and libraries) for writing cross-platform GUI-based applications.} license {{LGPL-2.1 GPL-3}} maintainers {gmail.com:christian.frisson openmaintainer} categories aqua version 5.2.1 revision 1
 phonon 496
 variants {debug universal} depends_build {port:pkgconfig port:cmake port:automoc port:automoc} portdir audio/phonon description {Cross Platform Multimedia API used by KDE4} homepage http://phonon.kde.org epoch 0 platforms darwin depends_lib path:lib/libQtCore.4.dylib:qt4-mac name phonon maintainers {michaelld openmaintainer} license {{LGPL-2.1 LGPL-3}} long_description {Cross Platform Multimedia API used by KDE4} depends_extract bin:xz:xz categories {audio kde kde4} version 4.7.1 revision 0
 gecode3 533
