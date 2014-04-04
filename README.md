@@ -7,6 +7,7 @@ Portfiles for [MacPorts](https://www.macports.org) (software manager for Mac OSX
 Some ports may have been merged in the main MacPorts distribution after having been committed here.
 
 * (2014/03/31) aqua/qt5 v5.2.1: installs from the official dmg rather than compiling, experimental, breaks lots of dependent packages!
+* (2014/04/04) audio/phonon v4.7.1: major update, for use with qt4
 * (2014/03/30) devel/vxl v1.17.0+ from [vxl/vxl](https://github.com/vxl/vxl): required openjpeg and ffmpeg fixes
 * (2013/08/25) graphics/libfreenect v0.2.0 from [OpenKinect/libfreenect](https://github.com/OpenKinect/libfreenect): just needed an update
 * (2013/08/30) graphics/openni v1.5.4.0 from [OpenNI/OpenNI](https://github.com/OpenNI/OpenNI): updated to the most recent unstable version
@@ -17,6 +18,8 @@ Some ports may have been merged in the main MacPorts distribution after having b
 * (2014/10/02) multimedia/JamomaCore from [jamoma/JamomaCore](https://github.com/jamoma/JamomaCore): experimental, for now without its Jamoma extensions
 * (2014/10/02) multimedia/JamomaScore from [OSSIA/Score](https://github.com/OSSIA/Score): experimental, for now without its Jamoma extensions
 * (2014/10/02) multimedia/JamomaScore from [OSSIA/i-score](https://github.com/OSSIA/i-score): experimental
+* (2014/04/04) multimedia/phonon-backend-vlc v.0.7.1: new port, for use with qt4
+* (2014/04/04) multimedia/VLC v.2.1.4: patch update plus modification to use macosx audio rather than pulseaudio
 
 ## Installation
 
