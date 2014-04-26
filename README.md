@@ -14,9 +14,9 @@ Some ports may have been merged in the main MacPorts distribution after having b
 * (2013/08/25) graphics/openni2 v2.2.0.30 from [ChristianFrisson/OpenNI2](https://github.com/ChristianFrisson/OpenNI2): required fixes for clang to compile under OSX 10.8 and scripts for a clean installation
 * (2013/08/25) graphics/openni2-freenectdriver v2.0.0.29 from [piedar/OpenNI2-FreenectDriver](https://github.com/piedar/OpenNI2-FreenectDriver): required waf fixes to compile
 * (2013/08/25) graphics/tiff v4.0.3 from [tiff](http://www.remotesensing.org/libtiff/): required cleaned headerpad_max_install_names ldflags otherwise fixing up app bundles fails against this dependency
-* (2014/10/02) multimedia/JamomaCore from [jamoma/JamomaCore](https://github.com/jamoma/JamomaCore): experimental, for now without its Jamoma extensions
-* (2014/10/02) multimedia/JamomaScore from [OSSIA/Score](https://github.com/OSSIA/Score): experimental, for now without its Jamoma extensions
-* (2014/10/02) multimedia/JamomaScore from [OSSIA/i-score](https://github.com/OSSIA/i-score): experimental
+* (2014/04/26) multimedia/JamomaCore from [jamoma/JamomaCore](https://github.com/ChristianFrisson/JamomaCore): experimental, for now without its Jamoma extensions
+* (2014/04/26) multimedia/JamomaScore from [OSSIA/Score](https://github.com/ChristianFrisson/Score): experimental, for now without its Jamoma extensions
+* (2014/02/10) multimedia/JamomaScore from [OSSIA/i-score](https://github.com/ChristianFrisson/i-score): experimental (to be updated)
 * (2014/04/04) multimedia/phonon-backend-vlc v.0.7.1: new port, for use with qt4
 * (2014/04/04) multimedia/VLC v.2.1.4: patch update plus modification to use macosx audio rather than pulseaudio
 
