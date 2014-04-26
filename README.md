@@ -10,7 +10,6 @@ Some ports may have been merged in the main MacPorts distribution after having b
 * (2014/04/04) audio/phonon v4.7.1: major update, for use with qt4
 * (2014/03/30) devel/vxl v1.17.0+ from [vxl/vxl](https://github.com/vxl/vxl): required openjpeg and ffmpeg fixes
 * (2013/08/25) graphics/libfreenect v0.2.0 from [OpenKinect/libfreenect](https://github.com/OpenKinect/libfreenect): just needed an update
-* (2013/08/30) graphics/openni v1.5.4.0 from [OpenNI/OpenNI](https://github.com/OpenNI/OpenNI): updated to the most recent unstable version
 * (2013/08/30) graphics/openni-avin2sensorkinect v5.1.2.1 from [avin2/SensorKinect](https://github.com/avin2/SensorKinect): updated to the most recent unstable version
 * (2013/08/25) graphics/openni2 v2.2.0.30 from [ChristianFrisson/OpenNI2](https://github.com/ChristianFrisson/OpenNI2): required fixes for clang to compile under OSX 10.8 and scripts for a clean installation
 * (2013/08/25) graphics/openni2-freenectdriver v2.0.0.29 from [piedar/OpenNI2-FreenectDriver](https://github.com/piedar/OpenNI2-FreenectDriver): required waf fixes to compile
