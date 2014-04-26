@@ -1,12 +1,12 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
-# $Id: Portfile 96206 2012-08-04 00:27:43Z ryandesign@macports.org $
+# $Id: Portfile 96206 2014-04-26 13:02:43Z gmail.com:christian.frisson $
 
 PortSystem          1.0
 PortGroup           github 1.0
 PortGroup           cmake 1.0
 
-github.setup        jamoma JamomaCore f54f8a7acc
-version             0.6.0.a28
+github.setup        ChristianFrisson JamomaCore 8d67c5b9c2
+version             0.6.0.a29
 categories          multimedia
 platforms           darwin
 maintainers         gmail.com:christian.frisson openmaintainer
@@ -18,13 +18,25 @@ long_description    Jamoma Core provides a set of layered C++ frameworks and ext
                     for creating an object model and then specializes that object model \
                     for advanced purposes such as audio and graphics digital means.
 
-checksums           rmd160  ea2cd391501ef1f8f0cd1bf4a9322a81230f1225 \
-                    sha256  922eac8e5d745ec01308943214590c65da6c843747935c6832035eada2df3b0e
+checksums           rmd160  d70de27d2611038c5aa617f86dfd4857100429f9 \
+                    sha256  04b62dfbfdac3440c3a113f419f84f0e1580323501ae1a7bc1fc280c4b5e8cab
 
 depends_lib         port:boost \
-                    port:libxml2
+                    port:libxml2 \
+                    port:portaudio \
+                    port:portmidi \
+                    port:libsndfile
 
-patchfiles          patch-CMakeLists.txt.diff \
-                    patch-Foundation-library-source-TTSymbolTable.cpp.diff
+patchfiles          patch-Foundation-library-source-TTFoundation.cpp.diff
 
+post-patch {
+	reinplace "s|@@PREFIX@@|${prefix}|g" ${worksrcpath}/Foundation/library/source/TTFoundation.cpp
+}
 
+post-destroot {
+	system "mkdir -p ${destroot}${prefix}/include/jamoma"
+	system "mv ${destroot}${prefix}/jamoma/include/*.h ${destroot}${prefix}/include/jamoma/"
+	system "mkdir -p ${destroot}${prefix}/lib/jamoma"
+	system "mv ${destroot}${prefix}/jamoma/extensions/*.ttdylib ${destroot}${prefix}/lib/jamoma/"
+	system "mv ${destroot}${prefix}/jamoma/lib/*.dylib ${destroot}${prefix}/lib/"
+}

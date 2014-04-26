@@ -1,13 +1,13 @@
 # -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
-# $Id: Portfile 96206 2012-08-04 00:27:43Z ryandesign@macports.org $
+# $Id: Portfile 96206 2014-04-26 14:29:43Z gmail.com:christian.frisson $
 
 PortSystem          1.0
 PortGroup           github 1.0
 PortGroup           cmake 1.0
 
-github.setup        OSSIA Score 746aa5dcb0
+github.setup        ChristianFrisson Score 0972e94
 name		    JamomaScore
-version             0.10.a3
+version             0.10.a2cmake
 categories          multimedia
 platforms           darwin
 maintainers         gmail.com:christian.frisson openmaintainer
@@ -22,12 +22,18 @@ long_description    The Score framework is based on the Jamoma Foundation which 
                     It also provides a tree structure to manage the namespace of an application \
                     in order to organize and access its services.
 
-checksums           rmd160  568f61029199cf0d3828c965563ea4bb6c67cf3f \
-                    sha256  9440ef596a247353214150dfb3e383eeca54f6dcba17c7d077a102b4e1e1a62e
+checksums           rmd160  c3f7edd3a5be0e1dc993ec7271d73996216a03c9 \
+                    sha256  9228c795ad5fbfedcce701fb4ba433d46d4a2cc2f45022db841e55504338ec27
 
 depends_lib         port:JamomaCore \
                     port:gecode3
 
-patchfiles          patch-CMakeLists.txt.diff
+post-destroot {
+	system "mkdir -p ${destroot}${prefix}/include/jamoma"
+	system "mv ${destroot}${prefix}/jamoma/include/*.h ${destroot}${prefix}/include/jamoma/"
+	system "mkdir -p ${destroot}${prefix}/lib/jamoma"
+	system "mv ${destroot}${prefix}/jamoma/extensions/*.ttdylib ${destroot}${prefix}/lib/jamoma/"
+	system "mv ${destroot}${prefix}/jamoma/lib/*.dylib ${destroot}${prefix}/lib/"
+}
 
 

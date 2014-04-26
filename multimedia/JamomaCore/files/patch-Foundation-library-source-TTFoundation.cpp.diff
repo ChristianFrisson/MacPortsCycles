@@ -1,0 +1,20 @@
+--- Foundation/library/source/TTFoundation.cpp.orig
++++ Foundation/library/source/TTFoundation.cpp
+@@ -70,6 +70,8 @@ void TTFoundationInit(const char* pathToBinaries)
+ 
+ 		if (pathToBinaries)
+ 			TTFoundationBinaryPath = pathToBinaries;
++        else
++            TTFoundationBinaryPath = "@@PREFIX@@/lib";
+ 
+ 		for (int i=0; i<kNumTTDataTypes; i++)
+ 			TTDataInfo::addDataInfoForType(TTDataType(i));
+@@ -132,7 +134,7 @@ void TTFoundationLoadExternalClasses(void)
+     if (!TTFoundationBinaryPath.empty()) {
+ 		// Look in the specified folder rather than the default location
+ 		TTString extensionsPath = TTFoundationBinaryPath;
+-        extensionsPath += "/extensions";
++        extensionsPath += "/jamoma";
+ 		TTFoundationLoadExternalClassesFromFolder(extensionsPath);
+ 	}
+ 	else {
