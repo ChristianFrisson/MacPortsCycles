@@ -6,7 +6,7 @@ Portfiles for [MacPorts](https://www.macports.org) (software manager for Mac OSX
 
 Some ports may have been merged in the main MacPorts distribution after having been committed here.
 
-* (2015/08/27) audio/essentia v2.1-dev from [ChristianFrisson/essentia](https://github.com/ChristianFrisson/essentia): new port
+* (2015/08/27) audio/essentia v2.1-dev from [ChristianFrisson/essentia](https://github.com/ChristianFrisson/essentia): new ports
 * (2015/08/27) audio/gaia v2.4.4 from [ChristianFrisson/gaia](https://github.com/ChristianFrisson/gaia): new port
 * (2014/04/04) audio/phonon v4.7.1: major update, for use with qt4
 * (2014/03/30) devel/vxl v1.17.0+ from [vxl/vxl](https://github.com/vxl/vxl): required openjpeg and ffmpeg fixes

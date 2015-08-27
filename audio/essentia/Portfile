@@ -5,7 +5,7 @@ PortSystem              1.0
 PortGroup               waf 1.0
 PortGroup               github 1.0
 
-github.setup            ChristianFrisson essentia d05c509492
+github.setup            ChristianFrisson essentia 1d8a7245b4
 name                    essentia
 version                 2.1-dev
 license                 AGPLv3
@@ -40,8 +40,8 @@ long_description        Essentia is an open-source C++ library for audio analysi
 
 homepage                http://essentia.upf.edu
 
-checksums               rmd160  cba26fde65604d53b8c47f8da51e51ecfdb37cd2 \
-                        sha256  637a60596a0cc885f5e77421906c21154917f82a9219409c68572bb4788fb98d
+checksums               rmd160  36bfdf642d88ccb2a0cd054e4dd2df0015d4328d \
+                        sha256  0161655975273e0177394a6a2e629edb42f13d0caaf030342bbd90ec4e31886b
 
 configure.args-append   --with-gaia
 #configure.args-append   --mode=release
