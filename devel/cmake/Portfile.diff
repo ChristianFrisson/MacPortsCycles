@@ -1,0 +1,18 @@
+--- /opt/local/var/macports/sources/rsync.macports.org/release/tarballs/ports/devel/cmake/Portfile	2015-10-01 15:01:18.000000000 +0200
++++ Portfile	2015-10-04 16:07:58.000000000 +0200
+@@ -30,6 +30,7 @@
+     # release
+ 
+     version         ${branch}.2
++    revision        1
+     checksums       rmd160 c7d3b8895e2e143b7e1019477764370535917dca \
+                     sha256 e75a178d6ebf182b048ebfe6e0657c49f0dc109779170bad7ffcb17463f2fc22
+ 
+@@ -41,6 +42,7 @@
+     master_sites    http://www.cmake.org/files/v${branch}/
+ 
+     patchfiles-append patch-Modules-noArchCheck.release.diff
++    patchfiles-append patch-Modules-FindBoost.cmake.diff
+ 
+     livecheck.type  regex
+     livecheck.regex ${name}-(\[0-9.\]+)${extract.suffix}
