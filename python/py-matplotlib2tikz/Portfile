@@ -1,0 +1,33 @@
+# $Id: Portfile 127314 2014-10-25 03:29:22Z larryv@macports.org $
+
+PortSystem        1.0
+PortGroup         python 1.0
+PortGroup         github 1.0
+
+github.setup      nschloe matplotlib2tikz 7b83ae9a1c
+
+name              py-matplotlib2tikz
+version           0.1.0
+categories-append graphics math
+license           GPL-3.0
+platforms         darwin
+maintainers       nomaintainer
+
+description       Python script for converting matplotlib figures to Pgfplots (TikZ)
+long_description  matplotlib2tikz is a Python script for converting matplotlib \
+                   figures into native Pgfplots (TikZ) figures.
+
+homepage          https://github.com/nschloe/matplotlib2tikz
+
+checksums           rmd160  e1846f03aef3fbca70f6c6b575e138820b8a977d \
+                    sha256  3e7c72cf14125e439c7309e537fb6404222f74b77a6f9c8546369d492c330b23
+
+python.versions   27
+
+universal_variant no
+
+depends_lib-append port:pgf
+
+if {${name} ne ${subport}} {
+  depends_lib-append port:py${python.version}-matplotlib
+}
