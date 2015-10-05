@@ -10,6 +10,7 @@ Some ports may have been merged in the main MacPorts distribution after having b
 * (2015/08/27) audio/gaia v2.4.4 from [ChristianFrisson/gaia](https://github.com/ChristianFrisson/gaia): new port
 * (2014/04/04) audio/phonon v4.7.1: major update, for use with qt4
 * (2015/10/04) devel/cmake: fix cmake v3.3.2 allowing to find boost v1.59 (fixed [upstream](https://github.com/Kitware/CMake/commit/ff5bb2efbe9f7bb4a1824b0ad727713fcd6bc54a?diff=split))
+* (2015/10/04) devel/fparser: new port
 * (2014/03/30) devel/vxl v1.17.0+ from [vxl/vxl](https://github.com/vxl/vxl): required openjpeg and ffmpeg fixes
 * (2015/10/04) graphics/hapi: fix v1.3.0 to build with libnifalcon support
 * (2013/08/25) graphics/libfreenect v0.2.0 from [OpenKinect/libfreenect](https://github.com/OpenKinect/libfreenect): just needed an update

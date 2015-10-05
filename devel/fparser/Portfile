@@ -1,0 +1,44 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 96206 2012-08-04 00:27:43Z ryandesign@macports.org $
+
+PortSystem          1.0
+name                fparser
+version             4.5.2
+categories          devel
+platforms           darwin
+maintainers         gmail.com:christian.frisson openmaintainer
+license             LGPL-3+
+homepage            http://warp.povusers.org/FunctionParser/
+master_sites        http://warp.povusers.org/FunctionParser/
+supported_archs     i386 x86_64
+
+description         C++ library to parse and evaluate a mathematical function from a string
+
+long_description    This C++ library offers a class which can be used to parse \
+                    and evaluate a mathematical function from a string (which might \
+					be eg. requested from the user). The syntax of the function string \
+					is similar to mathematical expressions written in C/C++ (the exact \
+					syntax is specified in the documentation below). The function can \
+					then be evaluated with different values of variables. 
+					
+checksums           rmd160  3f19b34e599d6620668e2f68b869824bd6c2965b \
+					sha256  57ef7f03ea49e3f278a715c094933a0f3da4af9118a5f18de809062292be9833
+										
+use_zip             yes
+extract.mkdir       yes
+distname            ${name}${version}
+
+patchfiles			patch-Makefile.diff
+
+use_configure       no
+
+build.cmd           make
+
+destroot {
+    xinstall -m 0644 ${worksrcpath}/fparser.hh ${destroot}${prefix}/include
+    xinstall -m 0644 ${worksrcpath}/libfparser.a ${destroot}${prefix}/lib
+}
+
+livecheck.type  regex
+livecheck.regex ${name}(\[0-9.\]+)${extract.suffix}\">${name}
+livecheck.url   [lindex $master_sites 0]
