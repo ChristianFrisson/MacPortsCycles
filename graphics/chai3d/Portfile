@@ -1,0 +1,49 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 96206 2012-08-04 00:27:43Z gmail.com:christian.frisson $
+
+PortSystem          1.0
+name                chai3d
+version             3.0.0
+categories          devel
+platforms           darwin
+maintainers         gmail.com:christian.frisson openmaintainer
+license             GPL-3+
+homepage            http://www.chai3d.org/
+master_sites        http://web.stanford.edu/class/cs277/resources/downloads/
+
+description         CHAI 3D is an open source set of C++ libraries for computer haptics, \
+                    visualization and interactive real-time simulation.
+
+long_description    CHAI 3D supports several commercially-available three-, six- and seven-\
+                    degree-of-freedom haptic devices, and makes it simple to support new custom \
+					force feedback devices. CHAI 3D is especially suitable for education and \
+					research purposes, offering a light platform on which extensions can be \
+					developed. CHAI 3D's support for multiple haptic devices also makes it \
+					easy to send your applications to remote sites that may use different hardware.
+					
+checksums           rmd160  62876831d3d9658fd3409b1837743d1e29c51f78 \
+					sha256  1ef50ae0b48f7e1f1796630477bebb7bcb0d05c722d764e744fe8c0e97a672ef
+										
+distname            ${name}-${version}-Makefiles
+
+patchfiles			patch-Makefile.common.mac.diff
+
+use_configure       no
+
+build.cmd           make
+
+worksrcdir          ${name}-${version}
+
+destroot {
+    xinstall -m 0644 ${worksrcpath}/lib/release/mac-x86_64-clang/libchai3d.a ${destroot}${prefix}/lib
+	system "mkdir -p ${destroot}${prefix}/share/examples/chai3d/resources"
+	system "cp -R ${worksrcpath}/bin/resources/* ${destroot}${prefix}/share/examples/chai3d/resources"
+	xinstall -m 640 {*}[glob ${worksrcpath}/src/*/*.h] ${destroot}${prefix}/include
+	xinstall -m 640 {*}[glob ${worksrcpath}/src/*.h] ${destroot}${prefix}/include
+	xinstall -m 755 {*}[glob ${worksrcpath}/bin/*-*] ${destroot}${prefix}/share/examples/chai3d
+	xinstall -m 0644 ${worksrcpath}/extras/BASS/lib/mac-x86_64/libbass.dylib ${destroot}${prefix}/share/examples/chai3d
+}
+
+livecheck.type  regex
+livecheck.regex ${name}-(\[0-9.\]+)${extract.suffix}
+livecheck.url   [lindex $master_sites 0]
