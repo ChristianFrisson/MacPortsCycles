@@ -1,6 +1,6 @@
 # MacPortsCycles
 
-Portfiles for [MacPorts](https://www.macports.org) (software manager for Mac OSX) related to the [numediart](https://www.numediart.org) Institute and [MediaCycle](https://www.mediacycle.org) framework from [UMONS](https://www.umons.ac.be), for cycles of [bug reports and updates](https://trac.macports.org).
+Portfiles for [MacPorts](https://www.macports.org) (software manager for Mac OSX) related to the [numediart](http://www.numediart.org) Institute and [MediaCycle](http://www.numediart.org/tools/mediacycle/) framework from [UMONS](http://www.umons.ac.be), for cycles of [bug reports and updates](https://trac.macports.org).
 
 ## Available ports
 
