@@ -5,7 +5,7 @@ PortSystem              1.0
 PortGroup               waf 1.0
 PortGroup               github 1.0
 
-github.setup            ChristianFrisson gaia c0b9cdd4de
+github.setup            ChristianFrisson gaia cefae3ed5b
 name                    gaia
 version                 2.4.4
 license                 AGPLv3
@@ -22,12 +22,15 @@ long_description        C++ library to apply similarity measures and \
 
 homepage                http://essentia.upf.edu
 
-checksums               rmd160  dd38785ce69402b7a6622e0b183fd5ed4ef59330 \
-                        sha256  3379bcd59dfaa1a6052f0a570195248c3f9a94a6bd755bd48e1f7d962d8be3de
+checksums           rmd160  231115bb71ce63c16fb73623eba80cdec63e41aa \
+                    sha256  dbb0509792091b8ed5bf04ed7bf8bd5b464a1369ab5c5f480fd26971aea8483d
 
-configure.args-append   --qtdir=${prefix}/libexec/qt5-mac
+configure.args-append   --qtdir=${prefix}/libexec/qt5
 configure.args-delete   --nocache
 
 depends_build-append    port:pkgconfig
 
-depends_lib             port:libyaml port:swig port:qt5-mac
+depends_lib             port:libyaml port:swig port:qt5
+
+# Currently on ChristianFrisson's qt5 branch
+livecheck.url       ${github.homepage}/commits/qt5.atom
