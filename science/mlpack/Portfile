@@ -1,0 +1,33 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 2016-01-25 19:44:55Z gmail.com:christian.frisson $
+
+PortSystem          1.0
+PortGroup           cmake 1.0
+PortGroup           github 1.0
+
+github.setup        mlpack mlpack 3561ad7b90
+name                mlpack
+version             2.0.0
+categories          science
+maintainers         gmail.com:christian.frisson gmail.com:thierry.ravet openmaintainer
+license             BSD
+platforms           darwin
+
+description         mlpack is a C++ machine learning library 
+
+long_description    mlpack is a C++ machine learning library with emphasis on scalability, \
+                    speed, and ease-of-use. Its aim is to make machine learning possible for \
+                    novice users by means of a simple, consistent API, while simultaneously \
+                    exploiting C++ language features to provide maximum performance and maximum \
+                    flexibility for expert users.
+
+homepage            http://www.mlpack.org/
+
+checksums           rmd160  d199ba8943fdc45e68260fb4861093511a519347 \
+                    sha256  dde106584e79574f8b2d7589309b2f28dc9dfaa2dc068e251522c3403a2df90b
+
+depends_build       port:cmake
+
+depends_lib-append  port:boost \
+                    port:armadillo \
+                    port:hdf5
