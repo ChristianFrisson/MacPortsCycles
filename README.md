@@ -6,7 +6,7 @@ Portfiles for [MacPorts](https://www.macports.org) (software manager for Mac OSX
 
 Some ports may have been merged in the main MacPorts distribution after having been committed here.
 
-* (2015/08/27) audio/essentia v2.1-dev from [ChristianFrisson/essentia](https://github.com/ChristianFrisson/essentia): new ports
+* (2016/01/25) audio/essentia v2.1-dev from [MTG/essentia](https://github.com/MTG/essentia): new port
 * (2016/01/25) audio/gaia v2.4.4 from [ChristianFrisson/gaia](https://github.com/ChristianFrisson/gaia): new port, gaia mod for qt5 support 
 * (2014/04/04) audio/phonon v4.7.1: major update, for use with qt4
 * (2015/10/04) devel/cmake: fix cmake v3.3.2 allowing to find boost v1.59 (fixed [upstream](https://github.com/Kitware/CMake/commit/ff5bb2efbe9f7bb4a1824b0ad727713fcd6bc54a?diff=split))
