@@ -1,0 +1,49 @@
+--- build/CMakeLists.txt.orig	2014-01-21 14:47:09.000000000 +0100
++++ build/CMakeLists.txt	2015-10-08 17:44:54.000000000 +0200
+@@ -129,12 +129,16 @@
+ 
+ FIND_PACKAGE(Chai3D)
+ IF(CHAI3D_FOUND)
++  FIND_PACKAGE(Eigen3 REQUIRED)
++  INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIR}/Eigen)	
+   SET(HAVE_CHAI3D 1)
+   INCLUDE_DIRECTORIES( ${CHAI3D_INCLUDE_DIR}
+                        ../Chai3DRenderer/include )
+ 	SET( HAPI_INCLUDE_DIR ${HAPI_INCLUDE_DIR} ${HAPI_SOURCE_DIR}/../Chai3DRenderer/include CACHE INTERNAL "Set to internal to propagate change" )
+   SET(Chai3D_requiredLibs ${Chai3D_requiredLibs} ${CHAI3D_LIBRARIES} )
+-
++  IF( NOT ${CHAI3D_VERSION} VERSION_LESS "3.0.0" )
++    SET( CHAI3D_VERSION_3_0 "YES" )
++  ENDIF( NOT ${CHAI3D_VERSION} VERSION_LESS "3.0.0" )
+   IF( NOT ${CHAI3D_VERSION} VERSION_LESS "2.0.0" )
+     # No need to make a better comparasion than version 2.0.0 since the
+     # way we get the version number might be unreliable since the version
+@@ -161,7 +165,7 @@
+     ENDIF(GLUT_FOUND)
+   ENDIF( NOT ${CHAI3D_VERSION} VERSION_LESS "2.0.0" )
+ ELSEIF( NOT WIN32 )
+-  INCLUDE_DIRECTORIES( ../Chai3DRenderer/include )
++  INCLUDE_DIRECTORIES( ${EIGEN3_INCLUDE_DIR} ../Chai3DRenderer/include )
+ 	SET( HAPI_INCLUDE_DIR ${HAPI_INCLUDE_DIR} ${HAPI_SOURCE_DIR}/../Chai3DRenderer/include CACHE INTERNAL "Set to internal to propagate change" )
+ ENDIF(CHAI3D_FOUND)
+ 
+@@ -561,7 +565,7 @@
+                              LINK_FLAGS  "/INCREMENTAL:NO" )
+     ENDIF( MSVC )
+   ENDIF(HAVE_CHAI3D)
+-
++  
+   IF( MSVC )
+     # Set link flags for HAPI
+     SET_TARGET_PROPERTIES( HAPI
+@@ -578,6 +582,10 @@
+   ENDIF( MSVC )
+ ENDIF( WIN32 )
+ 
++IF(HAVE_CHAI3D AND NOT WIN32)
++    TARGET_LINK_LIBRARIES( HAPI ${Chai3D_requiredLibs} )
++ENDIF()
++
+ # set compile flags for HAPI project
+ SET_TARGET_PROPERTIES( HAPI PROPERTIES COMPILE_FLAGS "${HAPI_COMPILE_FLAGS}" )
+ 

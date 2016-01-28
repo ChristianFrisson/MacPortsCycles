@@ -1,0 +1,44 @@
+--- build/modules/FindHAPI.cmake.orig	2014-01-22 14:59:37.000000000 +0100
++++ build/modules/FindHAPI.cmake	2015-10-08 22:31:26.000000000 +0200
+@@ -145,10 +145,14 @@
+                           ../../${DEFAULT_LIB_INSTALL}
+                           ${module_file_path}/../../../${DEFAULT_LIB_INSTALL}
+                           DOC "Path to ${renderer_name}${HAPI_LIBRARY_SUFFIX}_d library." )
+-      MARK_AS_ADVANCED(HAPI_${renderer_name}_LIBRARY)
+-      MARK_AS_ADVANCED(HAPI_${renderer_name}_DEBUG_LIBRARY)
++	ELSE( WIN32 )
++		IF( ${renderer_name} STREQUAL "Chai3DRenderer" )
++			SET(HAPI_${renderer_name}_LIBRARY ${HAPI_LIBRARY})
++			SET(HAPI_${renderer_name}_DEBUG_LIBRARY ${HAPI_DEBUG_LIBRARY})
++		ENDIF()
+     ENDIF( WIN32 )
+-    
++    MARK_AS_ADVANCED(HAPI_${renderer_name}_LIBRARY)
++    MARK_AS_ADVANCED(HAPI_${renderer_name}_DEBUG_LIBRARY)
+     IF( HAPI_${renderer_name}_INCLUDE_DIR AND ( HAPI_${renderer_name}_LIBRARY OR ${HAPI_${renderer_name}_DEBUG_LIBRARY} ) )  
+       SET( HAPI_RENDERERS_INCLUDE_DIR ${HAPI_RENDERERS_INCLUDE_DIR} ${HAPI_${renderer_name}_INCLUDE_DIR} )
+       IF( WIN32 )    
+@@ -182,8 +186,21 @@
+         # using HAPI since it is assumed that the library using HAPI will include Chai3DRenderer.h.
+         FIND_PACKAGE( Chai3D REQUIRED )
+         IF(CHAI3D_FOUND)
+-          SET( HAPI_RENDERERS_INCLUDE_DIR ${HAPI_RENDERERS_INCLUDE_DIR} ${CHAI3D_INCLUDE_DIR} )
+-          SET( HAPI_RENDERERS_LIBRARIES ${HAPI_RENDERERS_LIBRARIES} ${CHAI3D_LIBRARIES} )
++		  FIND_PACKAGE(Eigen3 REQUIRED)
++		  INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIR}/Eigen)	
++          SET( HAPI_RENDERERS_INCLUDE_DIR ${EIGEN3_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIR}/Eigen ${HAPI_RENDERERS_INCLUDE_DIR} ${CHAI3D_INCLUDE_DIR} )
++          SET( HAPI_RENDERERS_LIBRARIES ${HAPI_RENDERERS_LIBRARIES} ${CHAI3D_LIBRARIES} ${EIGEN3_LIBRARY})
++		  IF(APPLE)
++			  SET( HAPI_RENDERERS_LIBRARIES ${HAPI_RENDERERS_LIBRARIES} 
++			  	"-framework IOKit" 
++		  		"-framework CoreFoundation" 
++				"-framework CoreServices" 
++				"-framework CoreAudio" 
++				"-framework AudioUnit" 
++				"-framework AudioToolbox" 
++				"-framework OpenGL" 
++				"-framework GLUT")
++		  ENDIF(APPLE)
+         ENDIF(CHAI3D_FOUND)
+       ENDIF( ( ${renderer_name} STREQUAL "Chai3DRenderer" ) )
+     ELSE( HAPI_${renderer_name}_INCLUDE_DIR AND ( HAPI_${renderer_name}_LIBRARY OR ${HAPI_${renderer_name}_DEBUG_LIBRARY} ) )

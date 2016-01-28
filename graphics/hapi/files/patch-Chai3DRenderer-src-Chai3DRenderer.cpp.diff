@@ -1,0 +1,270 @@
+--- Chai3DRenderer/src/Chai3DRenderer.cpp.orig	2014-01-16 15:02:39.000000000 +0100
++++ Chai3DRenderer/src/Chai3DRenderer.cpp	2015-10-08 17:30:42.000000000 +0200
+@@ -48,6 +48,9 @@
+ 
+ //using namespace H3D;
+ using namespace HAPI;
++#ifdef CHAI3D_VERSION_3_0
++using namespace chai3d;
++#endif
+ 
+ #ifdef HAVE_OPENGL
+ #ifdef MACOSX
+@@ -87,8 +90,11 @@
+ Chai3DRenderer::renderHapticsOneStep( 
+                      HAPIHapticsDevice *hd,
+                      const HapticShapeVector &shapes ) {
+-
++  #ifdef CHAI3D_VERSION_3_0
++  std::shared_ptr<H3DDevice> dev = static_pointer_cast< H3DDevice >( chai3d_tool->getDevice() );
++  #else
+   H3DDevice *dev = static_cast< H3DDevice * >( chai3d_tool->getDevice() );
++  #endif
+   dev->setNewValues( hd->getPosition(),
+                      hd->getVelocity(),
+                      hd->getOrientation(),
+@@ -106,6 +112,10 @@
+   Contacts new_contacts;
+ 
+   // set the contacts
++#ifdef CHAI3D_VERSION_3_0
++  unsigned int nr_contacts = chai3d_tool->m_hapticPoint->getNumCollisionEvents();
++  {
++#else
+   cProxyPointForceAlgo *p = chai3d_tool->getProxy();
+   if( p ) {
+     cTriangle *t0, *t1, *t2;
+@@ -115,36 +125,70 @@
+     cVector3d cp = p->getContactPoint();
+     unsigned int nr_contacts = p->getContacts( t0, t1, t2 );
+ #endif
++#endif
+ 
+     if( nr_contacts > 0 ) {
++#ifdef CHAI3D_VERSION_3_0
++    cVector3d cp = chai3d_tool->m_hapticPoint->getCollisionEvent(0)->m_globalPos;
++#else    
+ #ifdef CHAI3D_VERSION_2_0
+       t0 = p->m_contactPoint0->m_triangle;
+       cVector3d cp = p->m_contactPoint0->m_globalPos;
+ #endif
++#endif
+       HAPISurfaceObject::ContactInfo ci;
+       
+       // using normal for vertex0 as normal. should be ok since no smooth
+       // haptics rendering is done.
++      #ifdef CHAI3D_VERSION_3_0
++      cVector3d n =  chai3d_tool->m_hapticPoint->getCollisionEvent(0)->m_globalNormal;
++      ci.y_axis = Vec3( n.y(), n.z(), n.x() );
++      ci.contact_point_global = Vec3( cp.y(), cp.z(), cp.x() );
++      ci.force_global = Vec3( f.y(), f.z(), f.x() );
++      #else
+       cVector3d n =  t0->getVertex0()->getNormal();
+       ci.y_axis = Vec3( n.y, n.z, n.x );
+       ci.contact_point_global = Vec3( cp.y, cp.z, cp.x );
+       ci.force_global = Vec3( f.y, f.z, f.x );
++      #endif
+       HAPIFloat dot_product = ci.force_global * ci.y_axis;
+       if( H3DUtil::H3DAbs(dot_product) > Constants::epsilon 
+           && dot_product < 0 )
+         ci.y_axis = -ci.y_axis;
+-      map< cMesh *, HAPIHapticShape * >::iterator i = 
+-        mesh_map.find( t0->getParent() );
++      
++      map< cMesh *, HAPIHapticShape * >::iterator i; 
++      #ifdef CHAI3D_VERSION_3_0
++        cMesh* mesh = dynamic_cast<cMesh*>(chai3d_tool->m_hapticPoint->getCollisionEvent(0)->m_object);
++        i = mesh_map.find( mesh );
++      #else
++        i = mesh_map.find( t0->getParent() );
++      #endif  
+       if( i != mesh_map.end() ) {
+         new_contacts.push_back( make_pair( (*i).second, ci ) );
+       }
+ 
+       if( nr_contacts > 1 ) {
++#ifdef CHAI3D_VERSION_3_0
++        cVector3d cp = chai3d_tool->m_hapticPoint->getCollisionEvent(1)->m_globalPos;
++#else    
+ #ifdef CHAI3D_VERSION_2_0
+-          t1 = p->m_contactPoint1->m_triangle;
+-          cp = p->m_contactPoint1->m_globalPos;
++        t1 = p->m_contactPoint1->m_triangle;
++        cp = p->m_contactPoint1->m_globalPos;
++#endif
+ #endif
+         HAPISurfaceObject::ContactInfo ci;
++        #ifdef CHAI3D_VERSION_3_0
++        cVector3d n =  chai3d_tool->m_hapticPoint->getCollisionEvent(1)->m_globalNormal;
++        ci.y_axis = Vec3( n.y(), n.z(), n.x() );
++        ci.contact_point_global = Vec3( cp.y(), cp.z(), cp.x() );
++        ci.force_global = Vec3( f.y(), f.z(), f.x() );
++        cMesh* mesh = dynamic_cast<cMesh*>(chai3d_tool->m_hapticPoint->getCollisionEvent(1)->m_object);
++        map< cMesh *, HAPIHapticShape * >::iterator i = 
++          mesh_map.find( mesh );
++        if( i != mesh_map.end() && chai3d_tool->m_hapticPoint->getCollisionEvent(1)->m_object != chai3d_tool->m_hapticPoint->getCollisionEvent(0)->m_object ) {
++          new_contacts.push_back( make_pair( (*i).second, ci ) );
++        }
++        #else
+         cVector3d n =  t1->getVertex0()->getNormal();
+         ci.y_axis = Vec3( n.y, n.z, n.x );
+         ci.contact_point_global = Vec3( cp.y, cp.z, cp.x );
+@@ -154,13 +198,32 @@
+         if( i != mesh_map.end() && t1->getParent() != t0->getParent() ) {
+           new_contacts.push_back( make_pair( (*i).second, ci ) );
+         }
++        #endif
+ 
+         if( nr_contacts > 2 ) {
++#ifdef CHAI3D_VERSION_3_0
++        cVector3d cp = chai3d_tool->m_hapticPoint->getCollisionEvent(2)->m_globalPos;
++#else    
+ #ifdef CHAI3D_VERSION_2_0
+           t2 = p->m_contactPoint2->m_triangle;
+           cp = p->m_contactPoint2->m_globalPos;
+ #endif
++#endif
+           HAPISurfaceObject::ContactInfo ci;
++          #ifdef CHAI3D_VERSION_3_0
++          cVector3d n =  chai3d_tool->m_hapticPoint->getCollisionEvent(2)->m_globalNormal;
++          ci.y_axis = Vec3( n.y(), n.z(), n.x() );
++          ci.contact_point_global = Vec3( cp.y(), cp.z(), cp.x() );
++          ci.force_global = Vec3( f.y(), f.z(), f.x() );
++          cMesh* mesh = dynamic_cast<cMesh*>(chai3d_tool->m_hapticPoint->getCollisionEvent(2)->m_object);
++          map< cMesh *, HAPIHapticShape * >::iterator i = 
++            mesh_map.find( mesh );
++          if( i != mesh_map.end() && 
++              chai3d_tool->m_hapticPoint->getCollisionEvent(2)->m_object != chai3d_tool->m_hapticPoint->getCollisionEvent(0)->m_object &&
++              chai3d_tool->m_hapticPoint->getCollisionEvent(2)->m_object != chai3d_tool->m_hapticPoint->getCollisionEvent(1)->m_object) {
++            new_contacts.push_back( make_pair( (*i).second, ci ) );
++          }
++          #else
+           cVector3d n =  t2->getVertex0()->getNormal();
+           ci.y_axis = Vec3( n.y, n.z, n.x );
+           ci.contact_point_global = Vec3( cp.y, cp.z, cp.x );
+@@ -172,6 +235,7 @@
+               t2->getParent() != t1->getParent()) {
+             new_contacts.push_back( make_pair( (*i).second, ci ) );
+           }
++          #endif
+         }
+       }
+     }
+@@ -182,7 +246,11 @@
+   contacts.swap( new_contacts );
+   contacts_lock.unlock();
+ 
++#ifdef CHAI3D_VERSION_3_0
++  return HAPIForceEffect::EffectOutput( Vec3( f.y(), f.z(), f.x() ) );
++#else
+   return HAPIForceEffect::EffectOutput( Vec3( f.y, f.z, f.x ) );
++#endif
+ }
+ 
+ 
+@@ -202,8 +270,11 @@
+       dynamic_cast< HAPIFrictionSurface * >( shape->getSurface() );
+ 
+     if( chai3d_surface || friction_surface ) {
++    #ifdef CHAI3D_VERSION_3_0
++      cMesh *mesh = new cMesh();
++    #else
+       cMesh *mesh = new cMesh(world);
+-      
++    #endif  
+       new_meshes.push_back( mesh );
+       new_mesh_map[mesh] = shape;
+       
+@@ -260,12 +331,17 @@
+ 
+ 
+ HAPI::Vec3 Chai3DRenderer::getProxyPosition() {
++#ifdef CHAI3D_VERSION_3_0
++  cVector3d p = chai3d_tool->m_hapticPoint->getGlobalPosProxy();
++  return Vec3( p.y(), p.z(), p.x() );
++#else
+   assert( chai3d_tool->getProxy() != NULL );
+   cVector3d p = chai3d_tool->getProxy()->getProxyGlobalPosition();
+   return Vec3( p.y, p.z, p.x );
++#endif
+ }
+ 
+-
++#ifndef CHAI3D_VERSION_3_0
+ int Chai3DRenderer::H3DDevice::command(int a_command, void* a_data)
+ {
+     int result = CHAI_MSG_OK;
+@@ -386,24 +462,42 @@
+ 
+     return result;
+ }
++#endif
+ 
+ #ifdef CHAI3D_VERSION_2_0
++#ifdef CHAI3D_VERSION_3_0
++bool Chai3DRenderer::H3DDevice::getPosition( cVector3d &a_position ) {
++  a_position.set(position.x, position.y, position.z);
++  return C_SUCCESS;
++#else
+ int Chai3DRenderer::H3DDevice::getPosition( cVector3d &a_position ) {
+   a_position.y = position.x;
+   a_position.z = position.y;
+   a_position.x = position.z;
+   return 0;
++#endif
+ }
+ 
++#ifdef CHAI3D_VERSION_3_0
++bool Chai3DRenderer::H3DDevice::getLinearVelocity(
++  cVector3d &a_linearVelocity ) {
++  a_linearVelocity.set(velocity.x, velocity.y, velocity.z);
++  return C_SUCCESS;
++#else
+ int Chai3DRenderer::H3DDevice::getLinearVelocity(
+   cVector3d &a_linearVelocity ) {
+   a_linearVelocity.y = velocity.x;
+   a_linearVelocity.z = velocity.y;
+   a_linearVelocity.x = velocity.z;
+   return 0;
++#endif
+ }
+ 
++#ifdef CHAI3D_VERSION_3_0
++bool Chai3DRenderer::H3DDevice::getRotation( cMatrix3d &a_rotation ) {
++#else
+ int Chai3DRenderer::H3DDevice::getRotation( cMatrix3d &a_rotation ) {
++#endif
+   Rotation r = orientation;
+   r.axis.y = orientation.axis.x;
+   r.axis.z = orientation.axis.y;
+@@ -412,17 +506,30 @@
+   a_rotation.set( m[0][0], m[0][1], m[0][2], 
+                   m[1][0], m[1][1], m[1][2], 
+                   m[2][0], m[2][1], m[2][2] );
++#ifdef CHAI3D_VERSION_3_0
++  return C_SUCCESS;
++#else
+   return 0;
++#endif
+ }
+ 
++#ifdef CHAI3D_VERSION_3_0
++bool Chai3DRenderer::H3DDevice::getUserSwitch( int a_switchIndex,
++                                              bool &a_status ) {
++#else
+ int Chai3DRenderer::H3DDevice::getUserSwitch( int a_switchIndex,
+                                               bool &a_status ) {
++#endif
+   if( a_switchIndex == 0 )
+     // Only care about button 0
+     a_status = (buttons & 1)?true:false;
+   else if( a_switchIndex == 1 )
+     a_status = (buttons & 2)?true:false;
++#ifdef CHAI3D_VERSION_3_0
++  return C_SUCCESS;
++#else
+   return 0;
++#endif
+ }
+ #endif
+ 

@@ -1,0 +1,180 @@
+--- Chai3DRenderer/include/HAPI/Chai3DRenderer.h.orig	2014-01-16 15:02:39.000000000 +0100
++++ Chai3DRenderer/include/HAPI/Chai3DRenderer.h	2015-10-08 17:55:32.000000000 +0200
+@@ -49,8 +49,23 @@
+ #define _MSVC
+ #endif
+ #include <devices/CGenericDevice.h>
++#ifdef CHAI3D_VERSION_3_0
++#include <tools/cToolCursor.h>
++#include <world/CMesh.h>
++#include <world/CWorld.h>
++using chai3d::cGenericObject;
++using chai3d::cToolCursor;
++using chai3d::cGenericHapticDevice;
++using chai3d::cGenericHapticDevicePtr;
++using chai3d::cMaterial;
++using chai3d::cMatrix3d;
++using chai3d::cMesh;
++using chai3d::cVector3d;
++using chai3d::cWorld;
++#else
+ #include <tools/CGeneric3dofPointer.h>
+ #include <scenegraph/CWorld.h>
++#endif
+ #else
+ #include <CGenericDevice.h>
+ #include <CGeneric3dofPointer.h>
+@@ -115,16 +130,27 @@
+     public:
+       /// Constructor.
+       H3DDevice() {
++      #ifdef CHAI3D_VERSION_3_0
++        m_deviceReady = true;
++        m_deviceAvailable = true;
++      #else
+         m_systemReady = true;
+         m_systemAvailable = true;
++      #endif  
+       }
+ 
+       /// Destructor.
+       ~H3DDevice() {}
+       
++      #ifdef CHAI3D_VERSION_3_0
++      virtual bool open() { return 0; }
++      
++      virtual bool close() { return 0; }
++      #else
+       virtual int open() { return 0; }
+-
+-      virtual int close() { return 0; }
++      
++      virtual int close() { return 0; }  
++      #endif
+ 
+       virtual int initialize(const bool a_resetEncoders=false) {
+         return 0;
+@@ -140,10 +166,21 @@
+         buttons = but;
+       }
+ 
++#ifndef CHAI3D_VERSION_3_0
+       //! Send a command to the phantom device.
+       virtual int command(int a_command, void* a_data);
++#endif
+ 
+ #ifdef CHAI3D_VERSION_2_0
++#ifdef CHAI3D_VERSION_3_0
++      virtual bool getPosition( cVector3d &a_position );
++
++      virtual bool getLinearVelocity( cVector3d &a_linearVelocity );
++
++      virtual bool getRotation( cMatrix3d &a_rotation );
++
++      virtual bool getUserSwitch( int a_switchIndex, bool &a_status );
++#else
+       virtual int getPosition( cVector3d &a_position );
+ 
+       virtual int getLinearVelocity( cVector3d &a_linearVelocity );
+@@ -152,9 +189,12 @@
+ 
+       virtual int getUserSwitch( int a_switchIndex, bool &a_status );
+ #endif
++#endif
+ 
++#ifndef CHAI3D_VERSION_3_0
+       //! Ask the device to call me back periodically
+       virtual bool setCallback(cCallback* m_callback) { return false; }
++#endif
+ 
+     protected:
+       Vec3 position, velocity;
+@@ -166,14 +206,30 @@
+     /// \ingroup Chai3DRenderer
+     /// \class H3DTool
+     /// \brief Our subclass of cGeneric3dofPointer of Chai3D.
+-    class H3DTool : public cGeneric3dofPointer {
++    class H3DTool : public 
++    #ifdef CHAI3D_VERSION_3_0
++    cToolCursor {
++    #else
++    cGeneric3dofPointer {
++    #endif
+     public:
+-      H3DTool(cWorld* a_world) : cGeneric3dofPointer( a_world ) {
++      H3DTool(cWorld* a_world) : 
++      #ifdef CHAI3D_VERSION_3_0
++      cToolCursor( a_world ) {
++      #else
++      cGeneric3dofPointer( a_world ) {
++      #endif
+         // If default cGenericdofPointer constructor creates a device. Delete
+         // it.
++        #ifdef CHAI3D_VERSION_3_0
++        if( m_hapticDevice )
++          m_hapticDevice.reset();
++        m_hapticDevice = H3DDevice::create();
++        #else
+         if( m_device )
+           delete m_device;
+         m_device = new H3DDevice;
++        #endif
+       }
+ 
+       ~H3DTool() {
+@@ -181,6 +237,7 @@
+         // if cGeneric3dofPointer will clean up its dynamically allocated
+         // functions by itself.
+ #ifdef CHAI3D_VERSION_2_0
++#ifndef CHAI3D_VERSION_3_0
+         if( m_proxyPointForceModel ) {
+           delete m_proxyPointForceModel;
+           m_proxyPointForceModel = NULL;
+@@ -190,6 +247,7 @@
+           delete m_potentialFieldsForceModel;
+           m_potentialFieldsForceModel = NULL;
+         }
++#endif
+ #else
+         for( unsigned int i = 0; i < m_pointForceAlgos.size(); ++i ) {
+           delete m_pointForceAlgos[i];
+@@ -199,9 +257,15 @@
+       }
+ 
+ #ifdef CHAI3D_VERSION_2_0
++#ifdef CHAI3D_VERSION_3_0
++      inline cGenericHapticDevicePtr getDevice() {
++        return m_hapticDevice;
++      }
++#else
+       inline cGenericHapticDevice * getDevice() {
+         return m_device;
+       }
++#endif 
+ #endif
+     };
+ 
+@@ -219,15 +283,23 @@
+ 
+     /// Get the current radius of the proxy.
+     inline HAPIFloat getProxyRadius() {
++    #ifdef CHAI3D_VERSION_3_0
++      return chai3d_tool->m_hapticPoint->getRadiusContact();;
++    #else
+       cProxyPointForceAlgo *p = chai3d_tool->getProxy();
+       if( p ) return p->getProxyRadius();
+       else return 0;
++    #endif  
+     }
+ 
+     /// Set the radius of the proxy.
+     inline void setProxyRadius( HAPIFloat r ) {
++    #ifdef CHAI3D_VERSION_3_0
++    chai3d_tool->setRadiusContact( r );
++    #else
+       cProxyPointForceAlgo *p = chai3d_tool->getProxy();
+       if( p ) p->setProxyRadius( r );
++    #endif  
+     }
+ 
+     /// Initialize the renderer to be used with the given haptics device.

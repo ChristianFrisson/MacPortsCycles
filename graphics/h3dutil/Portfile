@@ -1,0 +1,42 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 135604 2015-04-27 23:03:06Z mojca@macports.org $
+
+PortSystem          1.0
+PortGroup           cmake 1.0
+PortGroup           github 1.0
+
+github.setup        ChristianFrisson H3DUtil 4d13ea0804
+name                h3dutil
+version             1.3.0
+categories          graphics
+platforms           darwin
+maintainers         sensegraphics.com:support gmail.com:christian.frisson
+license             GPL-2+
+
+description         Development files for h3dutil, a utility library for the H3D framework.
+
+long_description    Development files for h3dutil, a utility library for the H3D framework. \
+                    Includes vector and matrix math, image loading functions, thread \
+                    handling and other common functions.
+
+homepage            http://www.h3dapi.org/
+#master_sites        ftp://www.h3dapi.org/pub/releases/source/
+
+checksums           rmd160  61233e7844e4490001d200abe9c1dd8cdcf0a5cc \
+                    sha256  7a0132f505a2bb636e9702fd131a19607bbfe12930da3c80ec3ad4812da49927
+
+depends_lib         port:dcmtk \
+                    port:freeimage \
+                    port:zlib
+
+patchfiles          patch-CMakeLists.txt.diff
+
+configure.post_args ${worksrcpath}/build
+cmake.out_of_source yes
+
+#livecheck.type      regex
+#livecheck.url       [lindex ${master_sites} 0]
+#livecheck.regex     ${name}-(\[0-9.\]+)${extract.suffix}
+
+# Currently on ChristianFrisson's H3DUtil master branch
+livecheck.url       ${github.homepage}/commits/master.atom
