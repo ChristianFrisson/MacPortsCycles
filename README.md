@@ -14,7 +14,9 @@ Some ports may have been merged in the main MacPorts distribution after having b
 * (2014/03/30) devel/vxl v1.17.0+ from [vxl/vxl](https://github.com/vxl/vxl): required openjpeg and ffmpeg fixes
 * (2015/10/20) graphics/chai3d: new port for v.3.0.0
 * (2015/10/04) graphics/hapi: fix v1.3.0 to build with libnifalcon support
+* (2016/01/27) graphics/ilmbase: update (in progress in MacPorts) to v2.2.0, required for h3dutil
 * (2013/08/25) graphics/libfreenect v0.2.0 from [OpenKinect/libfreenect](https://github.com/OpenKinect/libfreenect): just needed an update
+* (2016/01/27) graphics/openexr: update (in progress in MacPorts) to v2.2.0 plus header install fixes, required for h3dutil
 * (2013/08/30) graphics/openni-avin2sensorkinect v5.1.2.1 from [avin2/SensorKinect](https://github.com/avin2/SensorKinect): updated to the most recent unstable version
 * (2013/08/25) graphics/openni2 v2.2.0.30 from [ChristianFrisson/OpenNI2](https://github.com/ChristianFrisson/OpenNI2): required fixes for clang to compile under OSX 10.8 and scripts for a clean installation
 * (2013/08/25) graphics/openni2-freenectdriver v2.0.0.29 from [piedar/OpenNI2-FreenectDriver](https://github.com/piedar/OpenNI2-FreenectDriver): required waf fixes to compile
