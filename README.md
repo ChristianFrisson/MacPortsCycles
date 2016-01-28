@@ -26,7 +26,7 @@ Some ports may have been merged in the main MacPorts distribution after having b
 * (2014/04/04) multimedia/VLC v.2.1.4: patch update plus modification to use macosx audio rather than pulseaudio
 * (2015/10/04) python/py-matplotlib2tikz from [nschloe/matplotlib2tikz](https://github.com/nschloe/matplotlib2tikz): new port
 * (2016/01/25) science/armadillo v.6.500.3-test from [armadillo](http://arma.sourceforge.net): port update: removed boost dependency, set arpack/hdf5/superly as variants
-* (2016/01/25) science/mlpack v.2.0.0+ from [mlpack/mlpack](https://github.com/mlpack/mlpacl): new port
+* (2016/01/25) science/mlpack v.1.0.12 from [mlpack/mlpack](https://github.com/mlpack/mlpack): new port
 
 ## Installation
 
