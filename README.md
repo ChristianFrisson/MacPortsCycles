@@ -39,7 +39,7 @@ Once MacPorts is installed, open a terminal in a directory where you want to dow
 ### Install git if you don't have it
 ```bash
 sudo port selfupdate; 
-sudo port install git-core; 
+sudo port -u install git; 
 ```
 
 ### Clone this repository and add its path to the MacPorts sources before other entries
@@ -52,5 +52,5 @@ sudo port selfupdate
 ### Install ports
 Then to install a given port listed above, for instance openni-avin2sensorkinect:
 ```bash
-sudo port install openni-avin2sensorkinect
+sudo port -u install openni-avin2sensorkinect
 ```
