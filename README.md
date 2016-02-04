@@ -39,7 +39,29 @@ Once MacPorts is installed, open a terminal in a directory where you want to dow
 ### Install git if you don't have it
 ```bash
 sudo port selfupdate; 
-sudo port -u install git; 
+sudo port -u install git +svn; 
+```
+
+### Choose your variants
+Edit the configuration file for variants:
+```bash
+sudo sh -c 'port=`which port`;nano ${port%bin/port}etc/macports/variants.conf'; 
+```
+Then add some of the following variants:
+```bash
+# OpenCV
++opencl 
++qt5
+# FFmpeg
+#-gpl2 -gpl3 -nonfree
+# Octave
++accelerate -atlas
+# no X11 for GTK
+-x11 +no_x11 +quartz
+# gnuplot
+-wxwidgets -pangocairo
+# no LaTeX (using MacTeX instead)
+-latex
 ```
 
 ### Clone this repository and add its path to the MacPorts sources before other entries
