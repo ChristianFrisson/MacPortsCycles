@@ -9,6 +9,7 @@ PortGroup           github 1.0
 github.setup        ChristianFrisson H3DAPI 083862ce3d
 name                h3dapi
 version             2.3.1
+revision            1
 categories          graphics
 platforms           darwin
 maintainers         sensegraphics.com:support
@@ -73,10 +74,32 @@ if {${subport} eq ${name}} {
     wxWidgets.use   wxWidgets-3.0
 
     depends_lib     port:h3dapi \
-                    port:h3dui \
-                    port:h3dmedx3d \
-                    port:h3dphysics \
                     port:${wxWidgets.port}
+					
+	set  plugin_dir ${destroot}${applications_dir}/H3DViewer.app/Contents/Resources/Plugins
+					
+	variant ui description {compile with ui plugin} {
+		depends_lib-append      port:h3dui
+		post-destroot {
+			xinstall ${prefix}/lib/libh3dui.dylib ${plugin_dir}
+		}
+	}
+	
+	variant medx3d description {compile with medx3d plugin} {
+		depends_lib-append      port:h3dmedx3d
+		post-destroot {
+			xinstall ${prefix}/lib/libh3dmedx3d.dylib ${plugin_dir}
+		}
+	}
+	
+	variant physics description {compile with physics plugin} {
+		depends_lib-append      port:h3dphysics
+		post-destroot {
+			xinstall ${prefix}/lib/libh3dphysics.dylib ${plugin_dir}
+		}
+	}
+	
+	default_variants    +ui +medx3d +physics
 
     configure.post_args \
                     ${worksrcpath}/H3DViewer/build
@@ -88,11 +111,11 @@ if {${subport} eq ${name}} {
     post-destroot {
         file attributes ${destroot}${applications_dir}/H3DViewer.app/Contents/Resources/H3DViewer.icns -permissions a+r
         # TODO: this seems a bit weird (test if symlinks work as well)
-        set  plugin_dir ${destroot}${applications_dir}/H3DViewer.app/Contents/Resources/Plugins
+        #set  plugin_dir ${destroot}${applications_dir}/H3DViewer.app/Contents/Resources/Plugins
         xinstall -d ${plugin_dir}
-        foreach file { medx3d ui physics } {
-            xinstall ${prefix}/lib/libh3d${file}.dylib ${plugin_dir}
-        }
+        #foreach file { medx3d ui physics } {
+        #    xinstall ${prefix}/lib/libh3d${file}.dylib ${plugin_dir}
+        #}
     }
 }
 
