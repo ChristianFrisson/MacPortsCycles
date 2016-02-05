@@ -78,28 +78,28 @@ if {${subport} eq ${name}} {
 					
 	set  plugin_dir ${destroot}${applications_dir}/H3DViewer.app/Contents/Resources/Plugins
 					
-	variant ui description {compile with ui plugin} {
+	variant h3dui description {compile with h3dui plugin} {
 		depends_lib-append      port:h3dui
 		post-destroot {
 			xinstall ${prefix}/lib/libh3dui.dylib ${plugin_dir}
 		}
 	}
 	
-	variant medx3d description {compile with medx3d plugin} {
+	variant h3dmedx3d description {compile with h3dmedx3d plugin} {
 		depends_lib-append      port:h3dmedx3d
 		post-destroot {
 			xinstall ${prefix}/lib/libh3dmedx3d.dylib ${plugin_dir}
 		}
 	}
 	
-	variant physics description {compile with physics plugin} {
+	variant h3dphysics description {compile with h3dphysics plugin} {
 		depends_lib-append      port:h3dphysics
 		post-destroot {
 			xinstall ${prefix}/lib/libh3dphysics.dylib ${plugin_dir}
 		}
 	}
 	
-	default_variants    +ui +medx3d +physics
+	default_variants    +h3dui +h3dmedx3d +h3dphysics
 
     configure.post_args \
                     ${worksrcpath}/H3DViewer/build

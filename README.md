@@ -63,6 +63,8 @@ Then add some of the following variants:
 -wxwidgets -pangocairo
 # no LaTeX (using MacTeX instead)
 -latex
+# H3DViewer without plugins (not needed for InfoPhys)
+-h3dui -h3dmedx3d -h3dphysics
 ```
 
 ### Clone this repository and add its path to the MacPorts sources before other entries
