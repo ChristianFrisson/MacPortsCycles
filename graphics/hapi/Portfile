@@ -37,7 +37,8 @@ patchfiles          patch-build-CMakeLists.txt.diff
 conflicts           port:chai3d
 
 variant libnifalcon description {compile with libnifalcon support} {
-    depends_lib-append      port:libnifalcon
+    depends_lib-append      port:libnifalcon \
+                            port:boost  
 }
 
 default_variants    +libnifalcon

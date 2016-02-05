@@ -15,7 +15,7 @@ Some ports may have been merged in the main MacPorts distribution after having b
 * (2015/10/20) graphics/chai3d: new port for v.3.0.0
 * (2016/01/28) graphics/h3dutil: v1.3.0 from [ChristianFrisson/H3DUtil](https://github.com/ChristianFrisson/H3DUtil) for [ChristianFrisson/InfoPhys](https://github.com/ChristianFrisson/InfoPhys):   
 * (2016/02/05) graphics/h3dapi: v2.3.1 from [ChristianFrisson/H3DAPI](https://github.com/ChristianFrisson/H3DAPI) for [ChristianFrisson/InfoPhys](https://github.com/ChristianFrisson/InfoPhys):  
-* (2016/01/28) graphics/hapi: v1.3.0 from [ChristianFrisson/HAPI](https://github.com/ChristianFrisson/HAPI) for [ChristianFrisson/InfoPhys](https://github.com/ChristianFrisson/InfoPhys): libnifalcon support as default_variant
+* (2016/02/05) graphics/hapi: v1.3.0 from [ChristianFrisson/HAPI](https://github.com/ChristianFrisson/HAPI) for [ChristianFrisson/InfoPhys](https://github.com/ChristianFrisson/InfoPhys): libnifalcon support as default_variant
 * (2016/01/27) graphics/ilmbase: update (in progress in MacPorts) to v2.2.0, required for h3dutil
 * (2013/08/25) graphics/libfreenect v0.2.0 from [OpenKinect/libfreenect](https://github.com/OpenKinect/libfreenect): just needed an update
 * (2016/01/27) graphics/openexr: update (in progress in MacPorts) to v2.2.0 plus header install fixes, required for h3dutil
