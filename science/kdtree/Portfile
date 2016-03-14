@@ -1,0 +1,33 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 2016-01-25 19:44:55Z gmail.com:christian.frisson $
+
+PortSystem          1.0
+PortGroup           github 1.0
+
+github.setup        jtsiomb kdtree 4a6726c85c
+name                kdtree
+version             0.5.6
+categories          science
+maintainers         gmail.com:christian.frisson openmaintainer
+license             BSD-3
+platforms           darwin
+
+description         A simple C library for working with KD-Trees
+
+long_description    kdtree is a simple, easy to use C library for working with kd-trees. \
+                    Kd-trees are an extension of binary search trees to k-dimensional data. \
+                    They facilitate very fast searching, and nearest-neighbor queries. \
+                    This particular implementation is designed to be efficient and very easy \
+                    to use. It is completely written in ANSI/ISO C, and thus completely  \
+                    cross-platform.
+
+homepage            http://nuclear.mutantstargoat.com/sw/kdtree/
+
+checksums           rmd160  d9fd20f5cdb15da59ad7d9bcf2364c6dc6e86744 \
+                    sha256  30d761a2edee0cb74a5d5ddc444b2762d1e7dbe21caf97b134a4641e245da1a9
+
+destroot {
+				    xinstall -m 0644 ${worksrcpath}/kdtree.h ${destroot}${prefix}/include
+				    xinstall -m 0644 ${worksrcpath}/libkdtree.dylib ${destroot}${prefix}/lib
+				    xinstall -m 0644 ${worksrcpath}/libkdtree.a ${destroot}${prefix}/lib
+}
