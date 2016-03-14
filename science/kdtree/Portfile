@@ -30,4 +30,5 @@ destroot {
 				    xinstall -m 0644 ${worksrcpath}/kdtree.h ${destroot}${prefix}/include
 				    xinstall -m 0644 ${worksrcpath}/libkdtree.dylib ${destroot}${prefix}/lib
 				    xinstall -m 0644 ${worksrcpath}/libkdtree.a ${destroot}${prefix}/lib
+					system "install_name_tool -id ${prefix}/lib/libkdtree.dylib ${destroot}${prefix}/lib/libkdtree.dylib"
 }
