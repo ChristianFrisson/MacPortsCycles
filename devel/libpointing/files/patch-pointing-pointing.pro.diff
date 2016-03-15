@@ -1,0 +1,16 @@
+diff --git pointing/pointing.pro pointing/pointing.pro
+index 6af3ad7..13f38ab 100755
+--- pointing/pointing.pro
++++ pointing/pointing.pro
+@@ -6,9 +6,9 @@
+ 
+ TEMPLATE = lib
+ 
+-CONFIG += staticlib create_prl
++#CONFIG += staticlib create_prl
+ CONFIG -= qt
+-#CONFIG += shared
++CONFIG += shared
+ 
+ TARGET   = pointing
+ 

@@ -1,0 +1,13 @@
+diff --git apps/qtExample/qtExample.pro apps/qtExample/qtExample.pro
+index aa4c4a5..34666e9 100644
+--- apps/qtExample/qtExample.pro
++++ apps/qtExample/qtExample.pro
+@@ -13,3 +13,7 @@ include($$POINTING/pointing/pointing.pri)
+ 
+ HEADERS   += BallisticsPlayground.h
+ SOURCES   += BallisticsPlayground.cpp ballistics.cpp
++
++macx {
++  LIBS    += -framework ApplicationServices
++}
+\ No newline at end of file

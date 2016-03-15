@@ -1,0 +1,13 @@
+diff --git pointing/pointing.pri pointing/pointing.pri
+index ab7bbda..b8b644c 100644
+--- pointing/pointing.pri
++++ pointing/pointing.pri
+@@ -17,7 +17,7 @@ include(pointing-common.pri)
+ 
+ macx {
+   LIBS += -L$$POINTING/pointing -lpointing
+-  POST_TARGETDEPS += $$POINTING/pointing/libpointing.a
++  POST_TARGETDEPS += $$POINTING/pointing/libpointing.dylib
+ }
+ 
+ unix:!macx {
