@@ -20,6 +20,10 @@ homepage            http://libpointing.org
 checksums           rmd160    c6d2592b39246dadcf44fd1a3710e0348d296dd0 \
                     sha256    3e1c6c83da8bc512dc12fc01743301e77440ece731b3ab10bb9cc9b9e4580889 \
 
+patchfiles			patch-apps-qtExample-qtExample.pro.diff \
+					patch-pointing-pointing.pri.diff \
+					patch-pointing-pointing.pro.diff
+
 variant qt5 conflicts qt4 description "Build with Qt5" {}
 variant qt4 conflicts qt5 description "Build with Qt4" {}
 
@@ -51,5 +55,7 @@ destroot {
 	xinstall -m 640 {*}[glob ${worksrcpath}/pointing/transferfunctions/osx/*.h] ${destroot}${prefix}/include/pointing/transferfunctions/osx
 	xinstall -m 640 {*}[glob ${worksrcpath}/pointing/utils/*.h] ${destroot}${prefix}/include/pointing/utils
 	xinstall -m 640 {*}[glob ${worksrcpath}/pointing/utils/osx/*.h] ${destroot}${prefix}/include/pointing/utils/osx
-	xinstall -m 644 ${worksrcpath}/pointing/libpointing.a ${destroot}${prefix}/lib
+	xinstall -m 644 ${worksrcpath}/pointing/libpointing.1.0.0.dylib ${destroot}${prefix}/lib/libpointing.dylib
+	system "install_name_tool -id ${prefix}/lib/libpointing.dylib ${destroot}${prefix}/lib/libpointing.dylib"
+	system "install_name_tool -change libpointing.1.dylib ${prefix}/lib/libpointing.dylib ${destroot}${prefix}/bin/consoleExample"
 }
