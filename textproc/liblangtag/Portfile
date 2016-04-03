@@ -1,0 +1,34 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 139871 2016-04-03 12:21:07Z gmail.com:christian.frisson $
+
+PortSystem      1.0
+PortGroup       bitbucket 1.0
+
+bitbucket.setup tagoh liblangtag 3cc56cf32c
+name            liblangtag
+version         0.6.0
+maintainers     gmail.com:christian.frisson openmaintainer
+categories      textproc
+platforms       darwin
+license         MPL-2+ LGPL-3
+
+description     liblangtag is an interface library to access tags for identifying languages.
+long_description liblangtag is an interface library to access/deal with tags for identifying \
+                languages, which is described in RFC 5646.
+
+homepage        http://tagoh.bitbucket.org/liblangtag/
+
+checksums       rmd160  0ef5a82a16a98615bf800932bf070d53311ab2dd \
+                sha256  a4af5c4a83c18e621c77d815d4e3506aa1c53de892ddf1fa055351045f43b825
+
+patchfiles      patch-configure.ac.diff
+
+depends_build   port:gnome-common
+
+depends_lib     port:libxml2 \
+                port:gobject-introspection
+
+configure.cmd   gnome-autogen.sh
+
+configure.args  --sysconfdir=${prefix}/etc \
+                --with-locale-alias=/usr/share/locale/locale.alias

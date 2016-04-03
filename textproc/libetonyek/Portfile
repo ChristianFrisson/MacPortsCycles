@@ -1,0 +1,58 @@
+# -*- coding: utf-8; mode: tcl; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- vim:fenc=utf-8:ft=tcl:et:sw=4:ts=4:sts=4
+# $Id: Portfile 139871 2015-08-31 10:47:07Z jmr@macports.org $
+
+PortSystem      1.0
+PortGroup       github 1.0
+
+github.setup    LibreOffice libetonyek 47f8d3b930
+name            libetonyek
+version         0.1.6
+maintainers     gmail.com:rjvbertin gmail.com:christian.frisson openmaintainer
+categories      textproc
+platforms       darwin
+license         MPL-2+
+
+description     Libetonyek is a library that parses the file format of Apple iWork documents \
+                (Keynote, Pages and Numbers).
+long_description ${description} Supported versions are Keynote 2-6, Pages 1-4 and Numbers 1-2.
+
+homepage        https://wiki.documentfoundation.org/DLP/Libraries/libetonyek
+#master_sites    http://dev-www.libreoffice.org/src/${name}
+
+#use_xz          yes
+
+checksums       rmd160  b469f2b8b01bb239cd3b2c3daf531420cee3a886 \
+                sha256  38028e76062575c5186f682b990a980769e589211c8277f59b06dd5add3c7993
+
+depends_build   port:pkgconfig\
+                port:gperf
+
+depends_lib     port:zlib \
+                port:boost \
+                port:librevenge \
+                port:libxml2 \
+                port:glm \
+				port:liblangtag \
+				port:mdds
+
+pre-configure	{
+    system "cd ${worksrcpath} && ./autogen.sh"
+}
+
+# disable some of the chattiest warnings (gives significant speed-up, about 14% for me)
+configure.cflags-append   -Wno-c99-extensions -Wno-variadic-macros -Wno-c++11-long-long
+configure.cxxflags-append   -Wno-c99-extensions -Wno-variadic-macros -Wno-c++11-long-long
+
+configure.args  --enable-silent-rules \
+                --disable-dependency-tracking \
+                --without-docs \
+                --disable-werror \
+                --disable-tests \
+                --with-sysroot=${prefix}
+
+variant docs description {Build API documentation} {
+    depends_build-append    port:doxygen
+    configure.args-delete   --without-docs
+}
+
+#livecheck.regex "${name}-(\[0-9.\]+)${extract.suffix}"

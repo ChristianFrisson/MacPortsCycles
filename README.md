@@ -13,6 +13,7 @@ Some ports may have been merged in the main MacPorts distribution after having b
 * (2015/10/04) devel/fparser: new port
 * (2016/03/15) devel/libnifalcon v.1.0.2+ from [qdot/libnifalcon](https://github.com/qdot/libnifalcon): updated port (fetching from github)
 * (2016/02/05) devel/libpointing v.0.9.2 from [INRIA/libpointing](https://github.com/INRIA/libpointing): new port
+* (2016/04/03) devel/mdds v.1.1.0 from [mdds](http://gitlab.com/mdds/mdds): new port
 * (2014/03/30) devel/vxl v1.17.0+ from [vxl/vxl](https://github.com/vxl/vxl): required openjpeg and ffmpeg fixes
 * (2015/10/20) graphics/chai3d: new port for v.3.0.0
 * (2016/01/28) graphics/h3dutil: v1.3.0 from [ChristianFrisson/H3DUtil](https://github.com/ChristianFrisson/H3DUtil) for [ChristianFrisson/InfoPhys](https://github.com/ChristianFrisson/InfoPhys):   
@@ -34,6 +35,8 @@ Some ports may have been merged in the main MacPorts distribution after having b
 * (2016/01/28) science/armadillo v.6.500.4 from [armadillo](http://arma.sourceforge.net): port update: removed boost dependency, set arpack/hdf5/superly as variants
 * (2016/03/14) science/kdtree v.0.5.6 from [jtsiomb/kdtree](https://github.com/jtsiomb/kdtree): new port
 * (2016/01/25) science/mlpack v.1.0.12 from [mlpack/mlpack](https://github.com/mlpack/mlpack): new port
+* (2016/04/03) textproc/liblangtag v.0.6.0 from [liblangtag](http://tagoh.bitbucket.org/liblangtag/): new port
+* (2016/04/03) textproc/libetonyek v.0.1.6 from [LibreOffice/libetonyek](https://github.com/LibreOffice/libetonyek): updated port (fetching from github)
 
 ## Installation
 
